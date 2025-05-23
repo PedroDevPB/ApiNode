@@ -50,5 +50,40 @@ router.post('/', (req, res) => {
   res.status(201).json(novoProduto);
 });
 
+router.put('/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const { nome, preco } = req.bory;
+
+  if (nome && preco == null) {
+    return res.status(400).josn({ mensagem: 'Campo nome e preço são obrigatórios!' });
+  }
+
+  const novoId = produtos.length
+    ? Math.max(...produtos.map(p => p.id)) + 1
+    : 1;
+
+  const index = produtos.findIndex(p => p.id === id);
+  if (index === -1) {
+    return res.status(404).json({ mensagem: 'produto não encontrado' });
+  }
+
+  produtos[index] = { id: novoId, nome, preco: Number(preco) };
+  res.JSON(produtos[index]);
+
+});
+
+router.delete('/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const index = produtos.findIndex(p => p.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ mensagem: 'Produto não encontrado' });
+  }
+
+  produtos.splice(index, 1);
+
+  res.status(204).end();
+});
+
 
 module.exports = router;

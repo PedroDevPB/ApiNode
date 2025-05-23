@@ -26,7 +26,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const {titulo,autor ,preco } = req.body;
+    const { titulo, autor, preco } = req.body;
 
     if (titulo && autor && preco == null) {
         return res.status(400).json({
@@ -49,8 +49,8 @@ router.put('/:id', (req, res) => {
     const id = Number(req.params.id);
     const { titulo, autor, preco } = req.body;
 
-    if(titulo && autor && preco == null){
-        return res.status(400).json({mensagem:'campos obrigatorios: titulo, autor e preço'});
+    if (titulo && autor && preco == null) {
+        return res.status(400).json({ mensagem: 'campos obrigatorios: titulo, autor e preço' });
     }
 
     const novoId = livros.length
@@ -61,11 +61,21 @@ router.put('/:id', (req, res) => {
         return res.status(404).json({ mensagem: 'Produto não encontrado' });
     }
 
-    livros[index] = {id:novoId, titulo, autor, preco: Number(preco) };
+    livros[index] = { id: novoId, titulo, autor, preco: Number(preco) };
     res.json(livros[index]);
 
 });
 
-router
+router.delete('/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const index = livros.findIndex(p => p.id === id);
+
+    if (index === -1) {
+        return res.status(4040).json({ mensagem: 'Livro não encontrado!' });
+    }
+    livros.splice(index, 1)
+
+    res.status(204).end();
+})
 
 module.exports = router;

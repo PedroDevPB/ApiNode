@@ -16,8 +16,7 @@ app.use('/livros', produtosbooks);
     if (!produtosRouter) {
         return res.status(404).send(`
       <h1>Produto não encontrado!</h1>
-      <img src="https://httpstatusdogs.com/404-not-found"
-           alt="404 - Not Found (dog)">
+      <img src="https://http.cat/404.jpg" alt="404 Not Found">">
         `);
     }
 
